@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage{amsmath,graphicx}
+\usepackage{cite}
+\usepackage{amsthm,amssymb,amsfonts}
+\usepackage{textcomp}
+\usepackage{bm}
+\usepackage{algorithm}    
+\usepackage{algorithmic}
+\usepackage{booktabs}
+
+\begin{document}
+
+\title{Machine Learning, Spring 2018\\Homework 1}
+\date{Due on 23:59 Mar 15, 2018\\Send to $cs282\_01@163.com$ \\with subject "Chinese name+student number+HW1"}
+\maketitle
+
+%\benu
+%
+%\item
+
+\section{Preliminaries}
+
+\paragraph{1)}Give at least 2 examples of machine learning applications in your life. For each example,
+please describe how you think this real-world application can be reduced to a machine
+learning problem.
+
+\paragraph{2)} $f$ is twice continuously differentiable. At a point $x \in \mathbb{R}^n$, direction $d$ is a descent direction,
+i.e., $\nabla f(x)^Td <0$. Show that we can decrease $f$ by moving (a sufficiently small distance)
+along such a direction.
+
+
+
+%\section{Loss Function}     
+%In class when discussing linear regression, we assume that the Gaussian noise is independently
+%identically distributed. Now we assume the noises $\epsilon_{1}, \epsilon_{2}, ... \epsilon_{N}$ are independent but each
+%$\epsilon_{i} \sim N(0, \sigma^{2}_{i})$. Please 
+%\paragraph{1)} write down the log likelihood function of $w$; 
+%\paragraph{2)} show that minimizing
+%the log likelihood is equivalent to minimizing a weighted least square loss function
+%$J(W) = \sum_{i}a_{i}(y_{i}-x^{T}_{i} w)^{2}$, and express each $a_{i}$ in terms of $\epsilon_{i}$; 
+%\paragraph{3)} solve for $w_{MLE}$
+
+
+\section{Understanding Convex function and First-order necessary condition} 
+
+Suppose that $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is a twice continuously differentiable function defined in a convex set and that $p \in \mathbb{R}^n$, 
+
+%\item Show that $\nabla f(x+p) = \nabla f(x) + \int_{0}^{1}{\nabla^2 f(x+tp) p dt}$. \\
+%Using mean value theorem of integrals.
+\paragraph{1)} Show that $f$ is convex if the Hessian of $f$ is positive semidefinite. \\
+( Key: $f(x) = f(x^{\prime}) + \nabla f(x^\prime)^T(x - x^{\prime}) + \frac{1}{2} (x - x^{\prime})^T H(x^{\prime} + \lambda(x-x^{\prime})) (x - x^{\prime})$, one can conclude that $f(x) \geq f(x^{\prime}) + \nabla f(x^\prime)^T(x - x^{\prime})$ using the property of Hessian. )
+
+\paragraph{2)} Suppose $f$ is convex, show that the global minimizer satisfies the condition $\nabla f(x^*) = 0$. \\
+( Key: Using the fact $\nabla f(x^*)^T(x-x^*) \geq 0$ and $f(x) \geq f(x^*) + \nabla f(x^*)^T(x - x^*)$. )
+
+
+
+
+\section{Linear Regression via Gradient Descent Method}
+\label{problem1}
+How strong is the linear relationship between the age of a driver and the distance the driver can see? If we had to guess, we might think that the relationship is negative — as age increases, the distance decreases. A research firm collected data on a sample of n = 30 drivers, where the data is provided in ``\textbf{data.txt}''. 
+
+\paragraph{1)} Formulate this problem with the linear regression and give its expression. Give the expression of the cost function $J(\bm \theta)$.
+\paragraph{2)} Use the gradient descent method to solve this linear regression problem, and design a termination criterion. Plot your result.
+
+\textbf{Notice}:
+
+Please finish your simulation with MATLAB/Python and compress your codes into one file and sent it to TAs. （(Data preprocessing is recommended, otherwise the algorithm may crash, i.e., Age$/10$, Distance$/100$.)
+
+
+%We set the batch size of batch gradient descent method equals $1$ in this problem, which is the same as stochastic gradient descent method. 
+In pseudocode, the gradient descent method can be presented as follows:
+
+\begin{algorithm}
+	\caption{Gradient descent}
+	\label{a.af}
+	\begin{algorithmic}[1]
+		\STATE Given the desired accuracy $\epsilon$.
+		\STATE  Initialize the parameter $\bm \theta$ and the learning rate $\alpha$.
+		\REPEAT
+		\STATE Update $\bm \theta:=\bm \theta-\alpha \triangledown J(\bm \theta)$.
+%		\STATE Randomly shuffle examples in the training set.
+%		\FOR {$i=1,\cdots,n$}
+%		\STATE Update $\bm \theta:=\bm \theta-\alpha \triangledown J_i(\bm \theta)$.
+%		\ENDFOR
+		\UNTIL{\emph{Your termination criterion}. }
+		\STATE \textbf{return} $\bm \theta$.
+	\end{algorithmic}
+\end{algorithm}
+
+\section{How to Deal with Outliers}
+
+In the "Lecture 3: Linear Regression, Gradient Descent", we sum up the squares of the differences between the actual value and the estimated value
+\[J(\theta_0,\theta_1)=\frac{1}{2m} \sum_{i=1}^{m}(h(x^i)-y^i)^2.\]
+This error function is the one most frequently used, but it is one of several possible error functions. Because it sums up the squares of the differences, it is not robust to outliers. 
+we just add two outliers in a data for linear regression, assume that for the large data set, you could not find the outliers manually,  what would be a better error function to implement robust regression? 
+
+We need you to show that your error function could reduce the loss of test data compared with the square loss. The data is provided in ``\textbf{5-trainingdata.txt}'' and ``\textbf{5-testdata.txt}''. 
+
+
+
+%\eenu
+\end{document}
